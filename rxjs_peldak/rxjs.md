@@ -11,7 +11,7 @@
     * ilyenkor az adat szolgáltatója(producer) határozza meg mikor küld adatot a fogyasztónak(consumer)
     * a javascriptben a legalapvetőbb ilyenek a promise-ok
     * ide tartoznak az observable-ok is
-
+  <br/>
   <table>
   <thead>
   <th></th>
