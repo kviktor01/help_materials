@@ -1,4 +1,5 @@
 # Promises
+
 * egy aszinkron művelet későbbi befejeződését jelzi
 * lényegében egy ígéret(promise) hogy egy művelet végre fog hajtódni valamikor.
 Ez a végrehajtódás lehet sikeres, vagy sikertelen
@@ -8,10 +9,12 @@ Ez a végrehajtódás lehet sikeres, vagy sikertelen
   * rejected: a promise-ban lévő utásítás nem hajtódott végre sikeresen
 
 ## Promise.all()
+
 * promise-ok tömbjét várja paraméterként és egy promise-al tér vissza
 * akkor tér vissza ha az összes promise végetért
 * ha bármelyik promise rejected, akkor a promise all is rejected
 * példa:
+
 ```javascript
 const promise1 = Promise.resolve(3);
 const promise2 = 42;
@@ -26,10 +29,12 @@ Promise.all([promise1, promise2, promise3]).then((values) => {
 ```
 
 ## Promise.allSettled()
+
 * promise-ok tömbjét várja paraméterként és egy promise-al tér vissza
 * akkor lesz fulfilled ha mindegyik promise vagy rejected, vagy fulfilled, 
 tehát az összes promise végrehajtása befejeződött
 * példa:
+
 ```javascript
 Promise.allSettled([
   Promise.resolve(33),
@@ -47,12 +52,14 @@ Promise.allSettled([
 ```
 
 ## Promise.any()
+
 * promise-ok tömbjét várja paraméterként és egy promise-al tér vissza
 * a visszaadott promise fulfilled ha bármelyik promise fulfilled státusszal tér vissza
 * akkor lesz rejected ha az összes promise rejected. 
 Ekkor egy tömbbel tér vissza ami tartalmazza a hibaüzeneteket amiket a promise-ok dobtak (rejection reason tömb) 
 * rejected ha üres inputot adunk át neki
 * példa:
+
 ```javascript
 const pErr = new Promise((resolve, reject) => {
   reject("Always fails");
@@ -75,10 +82,12 @@ Promise.any([pErr, pSlow, pFast]).then((value) => {
 ```
 
 ## Promise.race()
+
 * promise-ok tömbjét várja paraméterként és egy promise-al tér vissza
 * a promise státusza a legelőször befejeződő promise státusza lesz
 * a promise futása befejeződik amikor a legelső promise befejeződik
 * példa
+
 ```javascript
 // Passing an array of promises that are already resolved,
 // to trigger Promise.race as soon as possible
@@ -101,9 +110,11 @@ setTimeout(() => {
 ```
 
 ## Promise.reject()
+
 * egy rejected státusszal viszatérő promise-t ad vissza
 * paraméterként a hiba okát lehet megadni (rejection reason)
 * példa:
+
 ```javascript
 Promise.reject(new Error("fail")).then(
   () => {
@@ -118,9 +129,11 @@ Promise.reject(new Error("fail")).then(
 ## Promise.resolve()
 
 ## Promise.try()
+
 * egy függvényt és annak parmétereit várja paraméterként (Promise.try(func, arg1,arg2 ...))
 * lényegében egy promise-ba teszi a függvény végrehajtását
 * példa:
+
 ```javascript
 function doSomething(action) {
   return Promise.try(action)
@@ -145,12 +158,14 @@ doSomething(async () => {
 ## Promise.withResolvers()
 
 ## Promise.prototype.then()
+
 * két függvényt vár parméterként
 * az első függvény akkor hívódik meg ha a promise fulfilled státusszal fejeződik be
 * a második akkor ha rejected lesz a státusza a promise-nak
 * a második egy opcionális függvény
 * egy promise-t ad vissza ami tovább chainelhető
 * példa:
+
 ```javascript
 const p1 = new Promise((resolve, reject) => {
   resolve("Success!");
@@ -169,12 +184,14 @@ p1.then(
 ```
 
 ## Promise.prototype.catch()
+
 * akkor hívódik meg ha a promise rejected státusszal tér vissza
 * ez egy rövidítés a then(undefined, onRejected) hívásra
 * egy függvényt vár paraméterként, 
 és ez a függvény megkapja paraméterként a rejected státusz okát
 * egy promise.al tér vissza így ez tovább chainelhető
 * példa:
+
 ```javascript
 const p1 = new Promise((resolve, reject) => {
   throw new Error("Uh-oh!");
@@ -186,10 +203,12 @@ p1.catch((e) => {
 ```
 
 ## Promise.prototype.finally()
+
 * egy függvényt vár paraméterül
 * ez a promise státuszától függetlenül végrehajtódó kódrészlet
 * egy promise-al tér vissza így tovább chainelhető
 * példa:
+
 ```javascript
 let isLoading = true;
 
@@ -211,4 +230,5 @@ fetch(myRequest)
     isLoading = false;
   });
 ```
+
 *Forrás: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise*
