@@ -58,7 +58,7 @@
 * az átadott függvény törzsében a subscriber.next(value) hívással tudjuk a 'value' értékét kifelé küldeni az observable-ből
 * fel lehet íratkozni az observable-re, lényegében figyeljük mikor ad ki adatot magaból, ezt a observable.subscribe() meghívásával tudjuk megtenni
 * a subscribe függvény két fajta paraméterrel hívható meg, objektummal vagy függvénnyel
-  * ha objectummal hívjuk meg akkor ilyen formája lehet az objectumnak:
+  * ha objektummal hívjuk meg akkor ilyen formája lehet az objektumnak:
 
     ```javascript
     observable.subscribe({
@@ -118,4 +118,40 @@
   observable.subscribe(observer2)
   //vagy csak szimplán egy callback function-ként is átadhatjuk, objektum nélkül a subscribe-nak, ekkor a next-et kezeli
   observable.subscribe(x => console.log('Observer got a next value: ' + x));
+  ```
+
+## Operators
+
+* az operátorok függvények
+* két típust különböztethetünk meg: pipeable és creation operators
+* Pipeable:
+  * a pipe függvénnyel addhatóak hozzá az observable-höz
+  * amikor meghívódnak nem módosítanak a meglévő observable-ön hanem egy újat hoznak létre
+* Creation:
+  * ezek külön álló függvények amelyek observabele-öket hoznak létre
+  * például: of()
+
+### Creation operatorok
+
+#### ajax()
+  
+* Egy Ajax requestet hoz létre, hogy adatot tudjunk lekérni valmilyen API-tól
+* Példa:
+
+  ```javascript
+  import { ajax } from 'rxjs/ajax';
+  import { map, catchError, of } from 'rxjs';
+
+  const obs$ = ajax('<https://api.github.com/users?per_page=5').pipe(>
+    map(userResponse => console.log('users: ', userResponse)),
+    catchError(error => {
+      console.log('error: ', error);
+      return of(error);
+    })
+  );
+
+  obs$.subscribe({
+    next: value => console.log(value),
+    error: err => console.log(err)
+  });
   ```
